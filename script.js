@@ -1,6 +1,11 @@
-const newBookButton = document.getElementsByClassName("newBook");
-const addBookDiv = document.getElementsByClassName("addBookDetails");
-const addedBooksDiv = document.getElementsByClassName("addedBooks");
+const newBookButton = document.querySelector(".newBook");
+const addBookDiv = document.querySelector(".addBookDetails");
+const addedBooksDiv = document.querySelector(".addedBooks");
+const bookCard = document.querySelector(".bookCard");
+document.querySelector("#newBookForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    addBookToLibrary();
+});
 
 const myLibrary = [];
 
@@ -11,20 +16,55 @@ function Book(title, author, pages, read) {
     this.read = read;
 }
 
-Book.prototype.info = function() {
-    return this.title + " by " + this.author + ", " + this.pages + " pages, " + this.read;
+Book.prototype.toggleRead = function() {
+    this.read = !this.read;
+}
+
+function toggleRead(index) {
+    myLibrary[index].toggleRead();
+    displayBooks();
 }
 
 function addBookToLibrary() {
-
+    let title = document.querySelector("#title").value;
+    let author = document.querySelector("#author").value;
+    let pages = document.querySelector("#pages").value;
+    let read = document.querySelector("#read").checked;
+    let newBook = new Book(title, author, pages, read);
+    myLibrary.push(newBook);
+    displayBooks();
 }
 
-const theHobbit = new Book("The Hobbit", "J.R.R.", 295, "not read");
-const lotr1 = new Book("First LOTR", "J.Something", 600, "have read");
-const lotr2 = new Book("Second LOTR", "J.Someone", 400, "not read");
-const lotr3 = new Book("Third LOTR", "J.Who", 300, "have read");
+newBookButton.addEventListener("click", function() {
+    let newBookForm = document.querySelector("#newBookForm");
+    newBookForm.style.display = "block";
+});
 
-console.log(theHobbit.info());
-console.log(lotr1.info());
-console.log(lotr2.info());
-console.log(lotr3.info());
+function displayBooks() {
+    let libraryEl = document.querySelector(".addedBooks");
+    libraryEl.innerHTML = "";
+    for (let i = 0; i < myLibrary.length; i++) {
+        let book = myLibrary[i];
+        let bookEl = document.createElement("div");
+        bookEl.setAttribute("class", "bookCard");
+        bookEl.innerHTML = `
+        <div class="cardHeader">
+            <h3 class="bookTitle">${book.title}</h3>
+            <h5 class="bookAuthor">${book.author}</h5>
+        </div>
+        <div class="cardBody">
+            <p>${book.pages} pages</p>
+            <p class="readStatus">${book.read ? "Read" : "Not Read Yet"}</p>
+        </div>
+        <div class="cardBodyButtons">
+            <button class="removeBtn" onclick="removeBook(${i})">Remove</button>
+            <button class="toggleReadBtn" onclick="toggleRead(${i})">Toggle Read</button>
+        </div>`;
+        libraryEl.appendChild(bookEl);
+    }
+}
+
+function removeBook(index) {
+    myLibrary.splice(index, 1);
+    displayBooks();
+}

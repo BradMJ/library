@@ -8,10 +8,54 @@
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
+    <div class="header">
+        <p class="headerTitle">Library</p>
+        <p class="headerGh"><a href="https://github.com/BradMJ">@BradMJ</a></p>
+    </div>
     <div class="addBookDetails">
         <button class="newBook">New Book</button>
+        <div class="bookFormDiv">
+            <form id="newBookForm" style="display: none;">
+                <h3>Add new book</h3>
+                <label for="title">Title</label>
+                <input 
+                    class="input"
+                    type="text" 
+                    id="title" 
+                    maxlength="100"
+                    placeholder="Book Title">
+                <label for="author">Author</label>
+                <input 
+                    class="input"
+                    type="text" 
+                    id="author" 
+                    maxlength="100"
+                    placeholder="Book Author">
+                <label for="pages">Pages</label>
+                <input 
+                    class="input"
+                    type="number" 
+                    id="pages" 
+                    max="10000"
+                    placeholder="Pages">
+                <label for="read">Read</label>
+                <input 
+                    class="checkbox"
+                    type="checkbox" 
+                    id="read">
+                <input type="submit" value="Add Book">
+            </form>
+        </div>
     </div>
     <div class="addedBooks"></div>
+    <div class="footer">
+        <p class="footer-p">Copyright ©
+            <script>
+                document.write(new Date().getFullYear())
+            </script>
+            BradMJ
+        </p>
+    </div>
     <script src="./script.js"></script>
 </body>
 </html>
