@@ -70,3 +70,66 @@ function removeBook(index) {
 }
 
 // test branch
+
+class Book {
+    constructor(title, author, pages, isRead) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.isRead = isRead
+    }
+}
+
+class Library {
+    constructor() {
+        this.books = []
+    }
+    addBook(newBook) {
+        if (!this.isInLibrary(newBook)) {
+            this.books.push(newBook);
+        };
+    }
+    removeBook(title) {
+        this.books = this.books.filter((book) => book.title !== title);
+    }
+    getBook(title) {
+        return this.books.find((book) => book.title === title);
+    }
+    isInLibrary(newBook) {
+        return this.books.some((book) => book.title === newBook.title);
+    }
+}
+
+const library = new Library();
+
+const createBookCard = (book) => {
+    let libraryEl = document.querySelector(".addedBooks");
+    const bookCard = document.createElement('div');
+    const title = document.createElement('p');
+    const author = document.createElement('p');
+    const pages = document.createElement('p');
+    const buttonGroup = document.createElement('div');
+    const readBtn = document.createElement('button');
+    const removeBtn = document.createElement('button');
+
+    title.textContent = `"${book.title}"`;
+    author.textContent = book.author;
+    pages.textContent = `${book.pages} pages`;
+    removeBtn.textContent = 'Remove';
+
+    if (book.isRead) {
+        readBtn.textContent = 'Read';
+        readBtn.classList.add('greenBtn');
+    } else {
+        readBtn.textContent = 'Not read';
+        readBtn.classList.add('redBtn');
+    }
+
+    bookCard.appendChild(title);
+    bookCard.appendChild(author);
+    bookCard.appendChild(pages);
+    buttonGroup.appendChild(readBtn);
+    buttonGroup.appendChild(removeBtn);
+    bookCard.appendChild(buttonGroup);
+    libraryEl.appendChild(bookCard);
+}
