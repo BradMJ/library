@@ -1,6 +1,5 @@
 const newBookButton = document.querySelector(".newBook");
 const libraryEl = document.querySelector(".addedBooks");
-const bookCard = document.querySelector(".bookCard");
 
 newBookButton.addEventListener("click", function() {
     let newBookForm = document.querySelector("#newBookForm");
